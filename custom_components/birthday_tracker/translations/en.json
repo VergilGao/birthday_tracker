@@ -1,0 +1,93 @@
+{
+  "title": "Birthday Tracker",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Add a birthday tracker",
+        "description": "Enter the person's birthday information.",
+        "data": {
+          "name": "Name",
+          "birth_date": "Solar birth date",
+          "enable_lunar": "Enable lunar birthday tracking"
+        },
+        "data_description": {
+          "birth_date": "Enter the person's Gregorian date of birth."
+        }
+      }
+    },
+    "error": {
+      "already_configured": "This person is already being tracked.",
+      "birth_date_in_future": "The birth date cannot be in the future.",
+      "invalid_date": "The birth date is invalid.",
+      "invalid_input": "The submitted values are invalid.",
+      "name_required": "A name is required."
+    },
+    "abort": {
+      "already_configured": "This person is already being tracked."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Edit birthday information",
+        "description": "Update this person's birthday settings.",
+        "data": {
+          "name": "Name",
+          "birth_date": "Solar birth date",
+          "enable_lunar": "Enable lunar birthday tracking"
+        },
+        "data_description": {
+          "birth_date": "Enter the person's Gregorian date of birth."
+        }
+      }
+    },
+    "error": {
+      "already_configured": "This person is already being tracked.",
+      "birth_date_in_future": "The birth date cannot be in the future.",
+      "invalid_date": "The birth date is invalid.",
+      "invalid_input": "The submitted values are invalid.",
+      "name_required": "A name is required."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "age": {
+        "name": "Age"
+      },
+      "solar_birth_date": {
+        "name": "Solar birth date"
+      },
+      "lunar_birth_date": {
+        "name": "Lunar birth date"
+      },
+      "days_until_solar_birthday": {
+        "name": "Days until next solar birthday"
+      },
+      "days_until_lunar_birthday": {
+        "name": "Days until next lunar birthday"
+      },
+      "next_solar_birthday": {
+        "name": "Next solar birthday"
+      },
+      "next_lunar_birthday": {
+        "name": "Next lunar birthday"
+      }
+    },
+    "binary_sensor": {
+      "is_today_solar_birthday": {
+        "name": "Solar birthday today",
+        "state": {
+          "on": "Yes",
+          "off": "No"
+        }
+      },
+      "is_today_lunar_birthday": {
+        "name": "Lunar birthday today",
+        "state": {
+          "on": "Yes",
+          "off": "No"
+        }
+      }
+    }
+  }
+}

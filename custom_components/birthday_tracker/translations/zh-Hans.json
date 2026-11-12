@@ -1,79 +1,96 @@
 {
-    "title": "生日追踪器",
-    "config": {
-        "step": {
-            "user": {
-                "title": "添加生日追踪对象",
-                "description": "请输入要追踪的人的信息。",
-                "data": {
-                    "name": "姓名",
-                    "birth_date": "出生日期（阳历）",
-                    "birth_date.description": "请输入日期，格式为 YYYY-MM-DD，例如 2025-09-03",
-                    "enable_lunar": "启用阴历生日追踪"
-                }
-            }
+  "title": "生日追踪器",
+  "config": {
+    "step": {
+      "user": {
+        "title": "添加生日追踪对象",
+        "description": "请输入要追踪的人的信息。",
+        "data": {
+          "name": "姓名",
+          "birth_date": "出生日期（阳历）",
+          "enable_lunar": "启用阴历生日追踪"
         },
-        "error": {
-            "invalid_date": "日期格式无效，请使用 YYYY-MM-DD"
-        },
-        "abort": {
-            "already_configured": "此人已被添加。"
+        "data_description": {
+          "birth_date": "请输入此人的阳历出生日期。"
         }
+      }
     },
-    "options": {
-        "step": {
-            "init": {
-                "title": "编辑生日信息",
-                "description": "修改此人的生日设置。",
-                "data": {
-                    "name": "姓名",
-                    "birth_date": "出生日期（阳历）",
-                    "birth_date.description": "请输入日期，格式为 YYYY-MM-DD，例如 2025-09-03",
-                    "enable_lunar": "启用阴历生日追踪"
-                }
-            }
-        }
+    "error": {
+      "already_configured": "此人已被添加。",
+      "birth_date_in_future": "出生日期不能晚于今天。",
+      "invalid_date": "出生日期无效。",
+      "invalid_input": "提交的配置无效。",
+      "name_required": "姓名不能为空。"
     },
-    "entity": {
-        "sensor": {
-            "age": {
-                "name": "年龄（周岁）",
-                "unit_of_measurement": "岁"
-            },
-            "solar_birth_date": {
-                "name": "阳历生日"
-            },
-            "lunar_birth_date": {
-                "name": "阴历生日"
-            },
-            "days_until_solar_birthday": {
-                "name": "距离下次阳历生日",
-                "unit_of_measurement": "天"
-            },
-            "days_until_lunar_birthday": {
-                "name": "距离下次阴历生日",
-                "unit_of_measurement": "天"
-            },
-            "is_today_solar_birthday": {
-                "name": "今天是阳历生日吗",
-                "state": {
-                    "on": "是",
-                    "off": "不是"
-                }
-            },
-            "is_today_lunar_birthday": {
-                "name": "今天是阴历生日吗",
-                "state": {
-                    "on": "是",
-                    "off": "不是"
-                }
-            },
-            "next_solar_birthday": {
-                "name": "下次阳历生日"
-            },
-            "next_lunar_birthday": {
-                "name": "下次阴历生日"
-            }
-        }
+    "abort": {
+      "already_configured": "此人已被添加。"
     }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "编辑生日信息",
+        "description": "修改此人的生日设置。",
+        "data": {
+          "name": "姓名",
+          "birth_date": "出生日期（阳历）",
+          "enable_lunar": "启用阴历生日追踪"
+        },
+        "data_description": {
+          "birth_date": "请输入此人的阳历出生日期。"
+        }
+      }
+    },
+    "error": {
+      "already_configured": "此人已被添加。",
+      "birth_date_in_future": "出生日期不能晚于今天。",
+      "invalid_date": "出生日期无效。",
+      "invalid_input": "提交的配置无效。",
+      "name_required": "姓名不能为空。"
+    }
+  },
+  "entity": {
+    "sensor": {
+      "age": {
+        "name": "年龄（周岁）",
+        "unit_of_measurement": "岁"
+      },
+      "solar_birth_date": {
+        "name": "阳历生日"
+      },
+      "lunar_birth_date": {
+        "name": "阴历生日"
+      },
+      "days_until_solar_birthday": {
+        "name": "距离下次阳历生日",
+        "unit_of_measurement": "天"
+      },
+      "days_until_lunar_birthday": {
+        "name": "距离下次阴历生日",
+        "unit_of_measurement": "天"
+      },
+      "next_solar_birthday": {
+        "name": "下次阳历生日"
+      },
+      "next_lunar_birthday": {
+        "name": "下次阴历生日"
+      }
+    },
+    "binary_sensor": {
+      "is_today_solar_birthday": {
+        "name": "今天是阳历生日吗",
+        "state": {
+          "on": "是",
+          "off": "不是"
+        }
+      },
+      "is_today_lunar_birthday": {
+        "name": "今天是阴历生日吗",
+        "state": {
+          "on": "是",
+          "off": "不是"
+        }
+      }
+    }
+  }
 }
