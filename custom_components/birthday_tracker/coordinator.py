@@ -1,50 +1,68 @@
+from collections.abc import Callable
 from datetime import date
-from homeassistant.config_entries import ConfigEntry
-from .helpers import (
-    parse_birth_date,
-    calculate_age,
-    get_next_solar_birthday,
-    get_next_lunar_birthday,
-    get_days_until,
-    get_lunar_birth_date,
-    is_today_birthday,
-)
+from typing import Any
+
+from homeassistant.util import dt as dt_util
+
 from .const import (
-    CONF_NAME,
+    ATTR_AGE,
+    ATTR_DAYS_UNTIL_LUNAR,
+    ATTR_DAYS_UNTIL_SOLAR,
+    ATTR_IS_TODAY_LUNAR_BIRTHDAY,
+    ATTR_IS_TODAY_SOLAR_BIRTHDAY,
+    ATTR_LUNAR_BIRTH_DATE,
+    ATTR_NEXT_LUNAR_BIRTHDAY,
+    ATTR_NEXT_SOLAR_BIRTHDAY,
+    ATTR_SOLAR_BIRTH_DATE,
     CONF_BIRTH_DATE,
     CONF_ENABLE_LUNAR,
-    ATTR_AGE,
-    ATTR_NEXT_SOLAR_BIRTHDAY,
-    ATTR_NEXT_LUNAR_BIRTHDAY,
-    ATTR_DAYS_UNTIL_SOLAR,
-    ATTR_DAYS_UNTIL_LUNAR,
-    ATTR_IS_TODAY_SOLAR_BIRTHDAY,
-    ATTR_IS_TODAY_LUNAR_BIRTHDAY,
-    ATTR_SOLAR_BIRTH_DATE,
-    ATTR_LUNAR_BIRTH_DATE,
+    CONF_NAME,
+)
+from .helpers import (
+    calculate_age,
+    get_days_until,
+    get_lunar_birth_date,
+    get_next_lunar_birthday,
+    get_next_solar_birthday,
+    is_today_birthday,
+    parse_birth_date,
 )
 
 
 class BirthdayCoordinator:
-    """Centralized birthday data manager."""
+    """Calculate and publish birthday data for one config entry."""
 
-    def __init__(self):
-        self._data: dict[str, dict] = {}
+    def __init__(self, config: dict[str, Any]) -> None:
+        self._config = config
+        self._listeners: set[Callable[[], None]] = set()
+        self._data: dict[str, Any] = {}
+        self.refresh()
 
-    def update_entry(self, entry: ConfigEntry):
-        """Recalculate birthday data for a single entry."""
-        today = date.today()
-        name = entry.data[CONF_NAME]
-        birth_date = parse_birth_date(entry.data[CONF_BIRTH_DATE])
-        enable_lunar = entry.data.get(CONF_ENABLE_LUNAR, True)
+    @property
+    def data(self) -> dict[str, Any]:
+        """Return the latest calculated values."""
+        return self._data
 
-        self._data[entry.entry_id] = self._calculate_all_fields(
-            name, birth_date, today, enable_lunar
+    def refresh(self, today: date | None = None) -> None:
+        """Recalculate all values and notify subscribed entities."""
+        today = today or dt_util.now().date()
+        self._data = self._calculate_all_fields(
+            self._config[CONF_NAME],
+            parse_birth_date(self._config[CONF_BIRTH_DATE]),
+            today,
+            self._config.get(CONF_ENABLE_LUNAR, True),
         )
+        for listener in tuple(self._listeners):
+            listener()
 
-    def get(self, entry_id: str) -> dict | None:
-        """Get computed birthday data for a specific entry."""
-        return self._data.get(entry_id)
+    def add_listener(self, listener: Callable[[], None]) -> Callable[[], None]:
+        """Subscribe an entity to coordinator updates."""
+        self._listeners.add(listener)
+
+        def remove_listener() -> None:
+            self._listeners.discard(listener)
+
+        return remove_listener
 
     def _calculate_all_fields(
         self, name: str, birth_date: date, today: date, enable_lunar: bool

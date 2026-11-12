@@ -1,5 +1,9 @@
 from homeassistant.components.binary_sensor import BinarySensorEntity
-from ..const import DOMAIN, ATTR_IS_TODAY_SOLAR_BIRTHDAY, ATTR_IS_TODAY_LUNAR_BIRTHDAY
+
+from ..const import (
+    ATTR_IS_TODAY_LUNAR_BIRTHDAY,
+    ATTR_IS_TODAY_SOLAR_BIRTHDAY,
+)
 from .birthday_tracker import BirthdayTracker
 
 
@@ -9,8 +13,7 @@ class IsTodaySolarSensor(BirthdayTracker, BinarySensorEntity):
 
     @property
     def is_on(self):
-        data = self.hass.data[DOMAIN]["coordinator"].get(self._entry.entry_id)
-        return data.get(ATTR_IS_TODAY_SOLAR_BIRTHDAY)
+        return self.coordinator.data.get(ATTR_IS_TODAY_SOLAR_BIRTHDAY)
 
     @property
     def icon(self):
@@ -23,8 +26,7 @@ class IsTodayLunarSensor(BirthdayTracker, BinarySensorEntity):
 
     @property
     def is_on(self):
-        data = self.hass.data[DOMAIN]["coordinator"].get(self._entry.entry_id)
-        return data.get(ATTR_IS_TODAY_LUNAR_BIRTHDAY)
+        return self.coordinator.data.get(ATTR_IS_TODAY_LUNAR_BIRTHDAY)
 
     @property
     def icon(self):

@@ -1,5 +1,6 @@
 from homeassistant.components.sensor import SensorEntity, SensorStateClass
-from ..const import DOMAIN, ATTR_DAYS_UNTIL_SOLAR, ATTR_DAYS_UNTIL_LUNAR
+
+from ..const import ATTR_DAYS_UNTIL_LUNAR, ATTR_DAYS_UNTIL_SOLAR
 from .birthday_tracker import BirthdayTracker
 
 
@@ -14,8 +15,7 @@ class DaysUntilSolarSensor(BirthdayTracker, SensorEntity):
 
     @property
     def native_value(self):
-        data = self.hass.data[DOMAIN]["coordinator"].get(self._entry.entry_id)
-        return data.get(ATTR_DAYS_UNTIL_SOLAR)
+        return self.coordinator.data.get(ATTR_DAYS_UNTIL_SOLAR)
 
 
 class DaysUntilLunarSensor(BirthdayTracker, SensorEntity):
@@ -27,5 +27,4 @@ class DaysUntilLunarSensor(BirthdayTracker, SensorEntity):
 
     @property
     def native_value(self):
-        data = self.hass.data[DOMAIN]["coordinator"].get(self._entry.entry_id)
-        return data.get(ATTR_DAYS_UNTIL_LUNAR)
+        return self.coordinator.data.get(ATTR_DAYS_UNTIL_LUNAR)

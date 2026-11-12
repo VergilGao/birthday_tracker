@@ -1,5 +1,6 @@
 from homeassistant.components.sensor import SensorEntity, SensorStateClass
-from ..const import ATTR_AGE, DOMAIN
+
+from ..const import ATTR_AGE
 from .birthday_tracker import BirthdayTracker
 
 
@@ -11,5 +12,4 @@ class AgeSensor(BirthdayTracker, SensorEntity):
 
     @property
     def native_value(self):
-        data = self.hass.data[DOMAIN]["coordinator"].get(self._entry.entry_id)
-        return data.get(ATTR_AGE)
+        return self.coordinator.data.get(ATTR_AGE)
