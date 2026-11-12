@@ -17,7 +17,19 @@
 
 ## 安装方式
 
-本项目面向 Home Assistant 2026.11.1 或更高版本，运行时要求 Python 3.14.2 或更高版本。
+本项目面向 Home Assistant 2026.11.0 或更高版本，运行时要求 Python 3.14.2 或更高版本。
+
+### Marketplace 安装
+
+推荐通过 Home Assistant 2026.11 内置 Marketplace 安装和更新：
+
+[在 Home Assistant 中打开 Birthday Tracker](https://my.home-assistant.io/redirect/hacs_repository/?owner=VergilGao&repository=birthday_tracker&category=integration)
+
+1. 打开 Home Assistant 的 Marketplace。
+2. 搜索并选择 `Birthday Tracker`。
+3. 点击下载并重启 Home Assistant。
+
+### 手动安装
 
 1. 将本插件复制到 `custom_components/birthday_tracker/` 目录下
 2. 在 Home Assistant 中通过 UI 添加生日配置
